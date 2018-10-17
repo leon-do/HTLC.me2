@@ -30,7 +30,7 @@ App.addPeer = (args, cbk) => {
     contentType: 'application/json',
     data: JSON.stringify({host, public_key: publicKey}),
     type: 'POST',
-    url: `/v0/peers/`,
+    url: `https://htlc.me/v0/peers/`,
   })
   .done((res) => cbk())
   .fail((r) => cbk([r.status, r.statusText]))
@@ -947,7 +947,7 @@ App.makeRequest = (args, cbk) => {
     contentType: 'application/json',
     data: JSON.stringify(args.json),
     type: !!args.json ? 'POST' : 'GET',
-    url: `/v0/${args.api}`,
+    url: `https://htlc.me/v0/${args.api}`,
   })
   .done((res) => cbk(null, res))
   .fail((r) => cbk([r.status, r.statusText]));
@@ -997,7 +997,7 @@ App.performSwap = (args, cbk) => {
       withdrawal_address: args.withdrawal_address,
     }),
     type: 'POST',
-    url: `/v0/swaps/trade_for/${args.currency_code}`,
+    url: `https://htlc.me/v0/swaps/trade_for/${args.currency_code}`,
   })
   .done(payment => {
     return cbk(null, {
@@ -1424,7 +1424,7 @@ App.safeBase64Encode = (args) => {
   }
 */
 App.sendPayment = (args, cbk) => {
-  $.post(`/v0/payments/${args.wallet_id}/${args.request}`)
+  $.post(`https://htlc.me/v0/payments/${args.wallet_id}/${args.request}`)
   .done((payment) => {
     let description = payment.description || '';
 
@@ -1468,7 +1468,7 @@ App.setNodeDetails = (args, cbk) => {
       signature: args.signature,
     }),
     type: 'POST',
-    url: `/v0/peers/details/`,
+    url: `https://htlc.me/v0/peers/details/`,
   })
   .done((res) => cbk())
   .fail((r) => cbk([r.status, r.statusText]))
@@ -1498,7 +1498,7 @@ App.showDirectoryBoost = (args) => {
   card.find('.boost').click(() => {
     card.find('.boost').text('Boosting in directory...');
 
-    $.post(`/v0/peers/${App.wallet_id}/directory_boost/${args.public_key}`)
+    $.post(`https://htlc.me/v0/peers/${App.wallet_id}/directory_boost/${args.public_key}`)
     .done(() => {
       card.hide(App.animation_time_ms);
 
@@ -1546,7 +1546,7 @@ App.showDirectoryRemoval = (args) => {
   card.find('.remove').click(() => {
     card.find('.remove').text('Removing from directory...');
 
-    $.post(`/v0/peers/${App.wallet_id}/directory_removal/${args.public_key}`)
+    $.post(`https://htlc.me/v0/peers/${App.wallet_id}/directory_removal/${args.public_key}`)
     .done(() => {
       card.hide(App.animation_time_ms);
 
@@ -1828,7 +1828,6 @@ App.submitRequestPayment = (e) => {
     card.removeClass('template').addClass('presented');
     card.find('.payment-amount').prop('href', `lightning:${res.request}`);
     card.find('.payment-amount').text(`${amount} tBTC ($${res.fiat_value} tUSD)`);
-    console.log(res.request)
     card.find('.payment-request').val(res.request);
 
     card.find('.qr-code').append($(qr));
