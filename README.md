@@ -1,2 +1,1 @@
-# HTLC.me2
-htlc.me locally
+node app.js
