@@ -335,7 +335,7 @@ App.clickedPresentNetwork = (e) => {
 
   FIXME: - abstract template logic
 */
-App.clickedSendPayment = (e) => {
+App.clickedSendPayment = (e) => { 
   e.preventDefault();
 
   $('.preparing-send').submit();
@@ -1771,6 +1771,7 @@ App.submitRequestPayment = (e) => {
   $('.request-payment').prop('disabled', true);
   $('.request-payment').text('Creating Request...');
 
+  // after clicking on 'Request Payment"
   return App.createInvoice({tokens}, (err, res) => {
     $('.request-payment').prop('disabled', false);
     $('.request-payment').text('Request Payment');
@@ -1827,6 +1828,7 @@ App.submitRequestPayment = (e) => {
     card.removeClass('template').addClass('presented');
     card.find('.payment-amount').prop('href', `lightning:${res.request}`);
     card.find('.payment-amount').text(`${amount} tBTC ($${res.fiat_value} tUSD)`);
+    console.log(res.request)
     card.find('.payment-request').val(res.request);
 
     card.find('.qr-code').append($(qr));
@@ -1954,6 +1956,7 @@ App.switchToNetworkTab = (args) => {
 /** Get a uuidv4
 */
 App.uuid = (args) => {
+  // return bitcore.PrivateKey()
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
